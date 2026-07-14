@@ -1,7 +1,7 @@
 class ApiConstants {
   ApiConstants._();
 
-  static const String baseUrl = 'http://localhost:5200';
+  static const String baseUrl = 'http://192.168.15.9:5200';
 
   // Auth
   static const String register = '/api/auth/register';

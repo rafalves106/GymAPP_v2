@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/presentation/providers/exercises_provider.dart';
@@ -55,7 +56,7 @@ class _ExercisesListScreenState extends ConsumerState<ExercisesListScreen> {
         data: (exercises) {
           if (exercises.isEmpty) {
             return EmptyState(
-              icon: Icons.fitness_center,
+              icon: CupertinoIcons.sportscourt,
               title: 'No exercises found',
               subtitle: _searchController.text.isNotEmpty
                   ? 'Try a different search term'
@@ -117,7 +118,7 @@ class _ExercisesListScreenState extends ConsumerState<ExercisesListScreen> {
           HapticFeedbackHelper.light();
           context.push('/home/work/exercises/new');
         },
-        child: const Icon(Icons.add),
+        child: const Icon(CupertinoIcons.plus),
       ),
     );
   }

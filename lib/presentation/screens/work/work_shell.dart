@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 class WorkShell extends StatelessWidget {
@@ -32,15 +33,15 @@ class WorkShell extends StatelessWidget {
         },
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.fitness_center),
+            icon: Icon(CupertinoIcons.sportscourt),
             label: 'Exercises',
           ),
           NavigationDestination(
-            icon: Icon(Icons.queue_music),
+            icon: Icon(CupertinoIcons.music_note_2),
             label: 'Trainings',
           ),
           NavigationDestination(
-            icon: Icon(Icons.person),
+            icon: Icon(CupertinoIcons.person),
             label: 'Profile',
           ),
         ],

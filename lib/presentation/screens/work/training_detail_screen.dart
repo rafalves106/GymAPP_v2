@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/presentation/providers/trainings_provider.dart';
@@ -28,12 +29,12 @@ class TrainingDetailScreen extends ConsumerWidget {
             title: Text(training.name),
             actions: [
               IconButton(
-                icon: const Icon(Icons.edit),
+                icon: const Icon(CupertinoIcons.pencil),
                 onPressed: () =>
                     context.push('/home/work/trainings/$id/edit'),
               ),
               IconButton(
-                icon: const Icon(Icons.delete),
+                icon: const Icon(CupertinoIcons.trash),
                 onPressed: () async {
                   final confirmed = await showDialog<bool>(
                     context: context,
@@ -108,7 +109,7 @@ class TrainingDetailScreen extends ConsumerWidget {
                                 .startTraining(training.exercises);
                             context.push('/active-training');
                           },
-                    icon: const Icon(Icons.play_arrow),
+                    icon: const Icon(CupertinoIcons.play_arrow_solid),
                     label: const Text('Start Training'),
                   ),
                 ),

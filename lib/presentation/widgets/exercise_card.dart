@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gym_app/domain/entities/exercise.dart';
 import 'package:gym_app/presentation/widgets/difficulty_badge.dart';
 import 'package:gym_app/presentation/widgets/muscle_group_chip.dart';
@@ -24,7 +25,7 @@ class ExerciseCard extends StatelessWidget {
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 16),
         color: Theme.of(context).colorScheme.error,
-        child: const Icon(Icons.delete, color: Colors.white),
+        child: const Icon(CupertinoIcons.trash, color: Colors.white),
       ),
       onDismissed: (_) => onDelete?.call(),
       child: Card(
@@ -40,7 +41,7 @@ class ExerciseCard extends StatelessWidget {
                 MuscleGroupChip(muscleGroup: exercise.muscleGroups.first),
             ],
           ),
-          trailing: const Icon(Icons.chevron_right),
+          trailing: const Icon(CupertinoIcons.chevron_right),
         ),
       ),
     );

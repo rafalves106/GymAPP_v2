@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class ErrorState extends StatelessWidget {
   final String message;
@@ -19,7 +20,7 @@ class ErrorState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.error_outline,
+              CupertinoIcons.exclamationmark_circle,
               size: 64,
               color: Theme.of(context).colorScheme.error,
             ),

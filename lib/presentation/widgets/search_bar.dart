@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class GymSearchBar extends StatelessWidget {
   final TextEditingController controller;
@@ -19,10 +20,10 @@ class GymSearchBar extends StatelessWidget {
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hint,
-        prefixIcon: const Icon(Icons.search),
+        prefixIcon: const Icon(CupertinoIcons.search),
         suffixIcon: controller.text.isNotEmpty
             ? IconButton(
-                icon: const Icon(Icons.clear),
+                icon: const Icon(CupertinoIcons.xmark_circle_fill),
                 onPressed: () {
                   controller.clear();
                   onChanged?.call('');

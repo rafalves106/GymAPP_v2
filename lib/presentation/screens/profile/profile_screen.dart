@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/app.dart';
@@ -67,7 +68,7 @@ class ProfileScreen extends ConsumerWidget {
                         ThemeMode.dark => 'Always dark',
                       }),
                       trailing: themeMode == mode
-                          ? Icon(Icons.check,
+                          ? Icon(CupertinoIcons.check_mark,
                               color: Theme.of(context).colorScheme.primary)
                           : null,
                       onTap: () {
@@ -104,7 +105,7 @@ class ProfileScreen extends ConsumerWidget {
                   context.go('/login');
                 }
               },
-              icon: const Icon(Icons.logout),
+              icon: const Icon(CupertinoIcons.square_arrow_right),
               label: const Text('Logout'),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Theme.of(context).colorScheme.error,

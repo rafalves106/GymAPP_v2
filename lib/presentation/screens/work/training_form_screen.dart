@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/data/models/training_model.dart';
@@ -106,7 +107,7 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                               onPressed: series > 1
                                   ? () => setModalState(() => series--)
                                   : null,
-                              icon: const Icon(Icons.remove),
+                              icon: const Icon(CupertinoIcons.minus),
                             ),
                             Text('$series',
                                 style: const TextStyle(fontSize: 20)),
@@ -114,7 +115,7 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                               onPressed: series < 15
                                   ? () => setModalState(() => series++)
                                   : null,
-                              icon: const Icon(Icons.add),
+                              icon: const Icon(CupertinoIcons.plus),
                             ),
                           ],
                         ),
@@ -132,7 +133,7 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                               onPressed: reps > 1
                                   ? () => setModalState(() => reps--)
                                   : null,
-                              icon: const Icon(Icons.remove),
+                              icon: const Icon(CupertinoIcons.minus),
                             ),
                             Text('$reps',
                                 style: const TextStyle(fontSize: 20)),
@@ -140,7 +141,7 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                               onPressed: reps < 30
                                   ? () => setModalState(() => reps++)
                                   : null,
-                              icon: const Icon(Icons.add),
+                              icon: const Icon(CupertinoIcons.plus),
                             ),
                           ],
                         ),
@@ -158,7 +159,7 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                               onPressed: restTime > 0
                                   ? () => setModalState(() => restTime -= 15)
                                   : null,
-                              icon: const Icon(Icons.remove),
+                              icon: const Icon(CupertinoIcons.minus),
                             ),
                             Text('$restTime',
                                 style: const TextStyle(fontSize: 20)),
@@ -166,7 +167,7 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                               onPressed: restTime < 120
                                   ? () => setModalState(() => restTime += 15)
                                   : null,
-                              icon: const Icon(Icons.add),
+                              icon: const Icon(CupertinoIcons.plus),
                             ),
                           ],
                         ),
@@ -266,7 +267,7 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                   if (_exercises.length < Training.maxExercises)
                     TextButton.icon(
                       onPressed: _addExercise,
-                      icon: const Icon(Icons.add),
+                      icon: const Icon(CupertinoIcons.plus),
                       label: const Text('Add'),
                     ),
                 ],
@@ -299,9 +300,9 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(Icons.drag_handle),
+                          const Icon(CupertinoIcons.line_horizontal_3),
                           IconButton(
-                            icon: const Icon(Icons.close),
+                            icon: const Icon(CupertinoIcons.xmark),
                             onPressed: () {
                               setState(() => _exercises.removeAt(index));
                             },

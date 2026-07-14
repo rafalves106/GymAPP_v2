@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/presentation/providers/active_training_provider.dart';
@@ -30,7 +31,7 @@ class TrainingSummaryScreen extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.check_circle,
+                CupertinoIcons.checkmark_circle_fill,
                 size: 80,
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -41,19 +42,19 @@ class TrainingSummaryScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 32),
               _StatCard(
-                icon: Icons.timer,
+                icon: CupertinoIcons.timer,
                 label: 'Total Time',
                 value: _formatDuration(totalTime),
               ),
               const SizedBox(height: 12),
               _StatCard(
-                icon: Icons.fitness_center,
+                icon: CupertinoIcons.sportscourt,
                 label: 'Exercises',
                 value: '$totalExercises',
               ),
               const SizedBox(height: 12),
               _StatCard(
-                icon: Icons.repeat,
+                icon: CupertinoIcons.repeat,
                 label: 'Total Sets',
                 value: '$totalSets',
               ),

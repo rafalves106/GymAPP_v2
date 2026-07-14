@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/presentation/providers/auth_provider.dart';
@@ -57,7 +58,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.fitness_center,
+                    CupertinoIcons.sportscourt,
                     size: 80,
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -72,7 +73,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       labelText: 'Email',
-                      prefixIcon: Icon(Icons.email),
+                      prefixIcon: Icon(CupertinoIcons.envelope),
                       border: OutlineInputBorder(),
                     ),
                     validator: (value) {
@@ -92,12 +93,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      prefixIcon: const Icon(Icons.lock),
+                      prefixIcon: const Icon(CupertinoIcons.lock),
                       border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(_obscurePassword
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                            ? CupertinoIcons.eye
+                            : CupertinoIcons.eye_slash),
                         onPressed: () {
                           setState(() => _obscurePassword = !_obscurePassword);
                         },

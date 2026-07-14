@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/presentation/providers/active_training_provider.dart';
@@ -32,7 +33,7 @@ class ActiveTrainingScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Active Training'),
         leading: IconButton(
-          icon: const Icon(Icons.close),
+          icon: const Icon(CupertinoIcons.xmark),
           onPressed: () async {
             final confirmed = await showDialog<bool>(
               context: context,
@@ -150,8 +151,8 @@ class ActiveTrainingScreen extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Icon(
                       index < state.currentSet
-                          ? Icons.check_circle
-                          :                       Icons.radio_button_unchecked,
+                          ? CupertinoIcons.checkmark_circle_fill
+                          :                       CupertinoIcons.circle,
                       color: index < state.currentSet
                           ? Theme.of(context).colorScheme.primary
                           : Colors.grey,

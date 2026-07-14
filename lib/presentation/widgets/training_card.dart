@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gym_app/domain/entities/training.dart';
 
 class TrainingCard extends StatelessWidget {
@@ -24,7 +25,7 @@ class TrainingCard extends StatelessWidget {
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 16),
         color: Theme.of(context).colorScheme.error,
-        child: const Icon(Icons.delete, color: Colors.white),
+        child: const Icon(CupertinoIcons.trash, color: Colors.white),
       ),
       onDismissed: (_) => onDelete?.call(),
       child: Card(
@@ -35,7 +36,7 @@ class TrainingCard extends StatelessWidget {
           subtitle: Text(
             '${training.exercises.length} exercises',
           ),
-          trailing: const Icon(Icons.chevron_right),
+          trailing: const Icon(CupertinoIcons.chevron_right),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/presentation/providers/trainings_provider.dart';
@@ -21,7 +22,7 @@ class TrainingsListScreen extends ConsumerWidget {
         data: (trainings) {
           if (trainings.isEmpty) {
             return EmptyState(
-              icon: Icons.queue_music,
+              icon: CupertinoIcons.music_note_2,
               title: 'No trainings yet',
               subtitle: 'Create your first training to start working out',
               actionLabel: 'Create Training',
@@ -79,7 +80,7 @@ class TrainingsListScreen extends ConsumerWidget {
           HapticFeedbackHelper.light();
           context.push('/home/work/trainings/new');
         },
-        child: const Icon(Icons.add),
+        child: const Icon(CupertinoIcons.plus),
       ),
     );
   }

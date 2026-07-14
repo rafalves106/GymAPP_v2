@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class EmptyState extends StatelessWidget {
   final IconData icon;
@@ -47,7 +48,7 @@ class EmptyState extends StatelessWidget {
               const SizedBox(height: 24),
               FilledButton.icon(
                 onPressed: onAction,
-                icon: const Icon(Icons.add),
+                icon: const Icon(CupertinoIcons.plus),
                 label: Text(actionLabel!),
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:gym_app/domain/entities/training_exercise.dart';
 
 class TrainingExerciseListItem extends StatelessWidget {
@@ -24,7 +25,7 @@ class TrainingExerciseListItem extends StatelessWidget {
         ),
         trailing: onDelete != null
             ? IconButton(
-                icon: const Icon(Icons.close),
+                icon: const Icon(CupertinoIcons.xmark),
                 onPressed: onDelete,
               )
             : null,

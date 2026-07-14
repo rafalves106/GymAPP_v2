@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym_app/presentation/screens/auth/login_screen.dart';
@@ -73,12 +74,12 @@ void main() {
       await tester.pumpWidget(makeTestable());
       await tester.pump();
 
-      expect(find.byIcon(Icons.visibility), findsOneWidget);
+      expect(find.byIcon(CupertinoIcons.eye), findsOneWidget);
 
-      await tester.tap(find.byIcon(Icons.visibility));
+      await tester.tap(find.byIcon(CupertinoIcons.eye));
       await tester.pump();
 
-      expect(find.byIcon(Icons.visibility_off), findsOneWidget);
+      expect(find.byIcon(CupertinoIcons.eye_slash), findsOneWidget);
     });
   });
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/presentation/providers/auth_provider.dart';
@@ -71,7 +72,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           controller: _firstNameController,
                           decoration: const InputDecoration(
                             labelText: 'First Name',
-                            prefixIcon: Icon(Icons.person),
+                            prefixIcon: Icon(CupertinoIcons.person),
                             border: OutlineInputBorder(),
                           ),
                           validator: (value) {
@@ -106,7 +107,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     keyboardType: TextInputType.emailAddress,
                     decoration: const InputDecoration(
                       labelText: 'Email',
-                      prefixIcon: Icon(Icons.email),
+                      prefixIcon: Icon(CupertinoIcons.envelope),
                       border: OutlineInputBorder(),
                     ),
                     validator: (value) {
@@ -125,12 +126,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      prefixIcon: const Icon(Icons.lock),
+                      prefixIcon: const Icon(CupertinoIcons.lock),
                       border: const OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(_obscurePassword
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                            ? CupertinoIcons.eye
+                            : CupertinoIcons.eye_slash),
                         onPressed: () {
                           setState(() => _obscurePassword = !_obscurePassword);
                         },
@@ -152,7 +153,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                     obscureText: true,
                     decoration: const InputDecoration(
                       labelText: 'Confirm Password',
-                      prefixIcon: Icon(Icons.lock_outline),
+                      prefixIcon: Icon(CupertinoIcons.lock),
                       border: OutlineInputBorder(),
                     ),
                     validator: (value) {

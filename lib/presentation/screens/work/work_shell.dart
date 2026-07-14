@@ -3,11 +3,12 @@ import 'package:go_router/go_router.dart';
 
 class WorkShell extends StatelessWidget {
   final Widget child;
-  const WorkShell({super.key, required this.child});
+  const WorkShell({super.key, this.child = const SizedBox.shrink()});
 
   int _currentIndex(BuildContext context) {
     final location = GoRouterState.of(context).matchedLocation;
-    if (location.startsWith('/home/profile')) return 1;
+    if (location.startsWith('/home/profile')) return 2;
+    if (location.startsWith('/home/work/trainings')) return 1;
     return 0;
   }
 
@@ -24,13 +25,19 @@ class WorkShell extends StatelessWidget {
             case 0:
               context.go('/home/work/exercises');
             case 1:
+              context.go('/home/work/trainings');
+            case 2:
               context.go('/home/profile');
           }
         },
         destinations: const [
           NavigationDestination(
             icon: Icon(Icons.fitness_center),
-            label: 'Work',
+            label: 'Exercises',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.queue_music),
+            label: 'Trainings',
           ),
           NavigationDestination(
             icon: Icon(Icons.person),

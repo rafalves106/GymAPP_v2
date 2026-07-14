@@ -21,7 +21,7 @@ class TrainingsListScreen extends ConsumerWidget {
         data: (trainings) {
           if (trainings.isEmpty) {
             return EmptyState(
-              icon: Icons.playlist_play,
+              icon: Icons.queue_music,
               title: 'No trainings yet',
               subtitle: 'Create your first training to start working out',
               actionLabel: 'Create Training',

@@ -151,7 +151,7 @@ class ActiveTrainingScreen extends ConsumerWidget {
                     child: Icon(
                       index < state.currentSet
                           ? Icons.check_circle
-                          : Icons.circle_outlined,
+                          :                       Icons.radio_button_unchecked,
                       color: index < state.currentSet
                           ? Theme.of(context).colorScheme.primary
                           : Colors.grey,

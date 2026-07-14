@@ -80,7 +80,10 @@ flutter run
 4. Select your iPhone as the build target
 5. Press **Run** (or use `flutter run` from the terminal)
 
-> **Note:** The app is configured to connect to `http://192.168.15.9:5200`. If your Mac's IP changes, update the `baseUrl` in `lib/config/constants.dart`.
+> **Note:** The app defaults to `http://localhost:5200`. For on-device testing, pass your Mac's IP at run time:
+> ```bash
+> flutter run --dart-define=API_BASE_URL=http://<YOUR_MAC_IP>:5200
+> ```
 
 ### Build for Release
 

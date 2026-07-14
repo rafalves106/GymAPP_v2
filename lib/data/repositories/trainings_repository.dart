@@ -1,5 +1,6 @@
 import '../datasources/api_client.dart';
 import '../models/training_model.dart';
+import '../../domain/entities/training.dart';
 import '../../config/constants.dart';
 
 class TrainingsRepository {
@@ -15,10 +16,11 @@ class TrainingsRepository {
         .toList();
   }
 
-  Future<List<TrainingModel>> getToday(int day) async {
+  Future<List<TrainingModel>> getToday(int flutterDay) async {
+    final apiDay = Training.flutterDayToApi(flutterDay);
     final response = await _apiClient.dio.get(
       ApiConstants.trainingsToday,
-      queryParameters: {'day': day},
+      queryParameters: {'day': apiDay},
     );
     return (response.data as List)
         .map((e) => TrainingModel.fromJson(e))
@@ -36,7 +38,16 @@ class TrainingsRepository {
       ApiConstants.trainings,
       data: training.toJson(),
     );
-    return TrainingModel.fromJson(response.data);
+    final created = TrainingModel.fromJson(response.data);
+
+    if (training.scheduledDay != null) {
+      await assignDay(created.id, training.scheduledDay);
+      return TrainingModel.fromEntity(
+        created.copyWith(scheduledDay: training.scheduledDay),
+      );
+    }
+
+    return created;
   }
 
   Future<TrainingModel> update(String id, TrainingModel training) async {
@@ -44,17 +55,26 @@ class TrainingsRepository {
       ApiConstants.trainingById(id),
       data: training.toJson(),
     );
-    return TrainingModel.fromJson(response.data);
+    final updated = TrainingModel.fromJson(response.data);
+
+    await assignDay(id, training.scheduledDay);
+    return TrainingModel.fromEntity(
+      updated.copyWith(
+        scheduledDay: training.scheduledDay,
+        clearScheduledDay: training.scheduledDay == null,
+      ),
+    );
   }
 
   Future<void> delete(String id) async {
     await _apiClient.dio.delete(ApiConstants.trainingById(id));
   }
 
-  Future<void> assignDay(String id, int? day) async {
+  Future<void> assignDay(String id, int? flutterDay) async {
+    final apiDay = Training.flutterDayToApi(flutterDay);
     await _apiClient.dio.put(
       ApiConstants.trainingDay(id),
-      data: {'day': day},
+      data: {'day': apiDay},
     );
   }
 }

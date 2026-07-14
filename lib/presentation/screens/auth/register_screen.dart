@@ -14,8 +14,7 @@ class RegisterScreen extends ConsumerStatefulWidget {
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _firstNameController = TextEditingController();
-  final _lastNameController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -23,8 +22,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   void dispose() {
-    _firstNameController.dispose();
-    _lastNameController.dispose();
+    _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
@@ -35,10 +33,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     if (_formKey.currentState!.validate()) {
       HapticFeedbackHelper.light();
       ref.read(authProvider.notifier).register(
+            username: _usernameController.text.trim(),
             email: _emailController.text.trim(),
             password: _passwordController.text,
-            firstName: _firstNameController.text.trim(),
-            lastName: _lastNameController.text.trim(),
           );
     }
   }
@@ -50,7 +47,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     ref.listen(authProvider, (previous, next) {
       next.whenData((user) {
         if (user != null) {
-          context.go('/home/work/exercises');
+          context.go('/home/work/today');
         }
       });
     });
@@ -65,41 +62,22 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               key: _formKey,
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _firstNameController,
-                          decoration: const InputDecoration(
-                            labelText: 'First Name',
-                            prefixIcon: Icon(CupertinoIcons.person),
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Required';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 16),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _lastNameController,
-                          decoration: const InputDecoration(
-                            labelText: 'Last Name',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Required';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ],
+                  TextFormField(
+                    controller: _usernameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Username',
+                      prefixIcon: Icon(CupertinoIcons.person),
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Username is required';
+                      }
+                      if (value.length < 3) {
+                        return 'Username must be at least 3 characters';
+                      }
+                      return null;
+                    },
                   ),
                   const SizedBox(height: 16),
                   TextFormField(

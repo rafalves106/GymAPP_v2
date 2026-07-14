@@ -79,7 +79,7 @@ class _ActiveTrainingScreenState extends ConsumerState<ActiveTrainingScreen> {
             );
             if (confirmed == true && context.mounted) {
               notifier.cancelSession();
-              context.go('/home/work/exercises');
+              context.go('/home/work/today');
             }
           },
         ),

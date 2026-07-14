@@ -24,7 +24,7 @@ class WorkShell extends StatelessWidget {
         onDestinationSelected: (i) {
           switch (i) {
             case 0:
-              context.go('/home/work/exercises');
+              context.go('/home/work/today');
             case 1:
               context.go('/home/work/trainings');
             case 2:
@@ -33,8 +33,8 @@ class WorkShell extends StatelessWidget {
         },
         destinations: const [
           NavigationDestination(
-            icon: Icon(CupertinoIcons.sportscourt),
-            label: 'Exercises',
+            icon: Icon(CupertinoIcons.today),
+            label: 'Today',
           ),
           NavigationDestination(
             icon: Icon(CupertinoIcons.calendar),

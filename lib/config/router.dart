@@ -4,9 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../presentation/screens/auth/login_screen.dart';
 import '../presentation/screens/auth/register_screen.dart';
 import '../presentation/screens/work/work_shell.dart';
-import '../presentation/screens/work/exercises_list_screen.dart';
-import '../presentation/screens/work/exercise_detail_screen.dart';
-import '../presentation/screens/work/exercise_form_screen.dart';
+import '../presentation/screens/work/today_screen.dart';
 import '../presentation/screens/work/week_board_screen.dart';
 import '../presentation/screens/work/training_detail_screen.dart';
 import '../presentation/screens/work/training_form_screen.dart';
@@ -20,7 +18,7 @@ final _shellNavigatorKey = GlobalKey<NavigatorState>();
 GoRouter createRouter({required String? token}) {
   return GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: token != null ? '/home/work/exercises' : '/login',
+    initialLocation: token != null ? '/home/work/today' : '/login',
     redirect: (context, state) {
       final isLoggedIn = token != null;
       final isAuthRoute =
@@ -28,7 +26,7 @@ GoRouter createRouter({required String? token}) {
           state.matchedLocation == '/register';
 
       if (!isLoggedIn && !isAuthRoute) return '/login';
-      if (isLoggedIn && isAuthRoute) return '/home/work/exercises';
+      if (isLoggedIn && isAuthRoute) return '/home/work/today';
       return null;
     },
     routes: [
@@ -46,31 +44,11 @@ GoRouter createRouter({required String? token}) {
         routes: [
           GoRoute(
             path: '/home',
-            redirect: (_, state) => '/home/work/exercises',
+            redirect: (_, state) => '/home/work/today',
           ),
           GoRoute(
-            path: '/home/work/exercises',
-            builder: (context, state) => const ExercisesListScreen(),
-            routes: [
-              GoRoute(
-                path: 'new',
-                builder: (context, state) => const ExerciseFormScreen(),
-              ),
-              GoRoute(
-                path: ':id',
-                builder: (context, state) => ExerciseDetailScreen(
-                  id: state.pathParameters['id']!,
-                ),
-                routes: [
-                  GoRoute(
-                    path: 'edit',
-                    builder: (context, state) => ExerciseFormScreen(
-                      id: state.pathParameters['id'],
-                    ),
-                  ),
-                ],
-              ),
-            ],
+            path: '/home/work/today',
+            builder: (context, state) => const TodayScreen(),
           ),
           GoRoute(
             path: '/home/work/trainings',

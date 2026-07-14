@@ -6,8 +6,6 @@ void main() {
     test('isExpired returns true when expiresAt is in the past', () {
       final user = User(
         token: 'abc',
-        email: 'test@test.com',
-        fullName: 'Test',
         expiresAt: DateTime.now().subtract(const Duration(hours: 1)),
       );
       expect(user.isExpired, true);
@@ -16,11 +14,18 @@ void main() {
     test('isExpired returns false when expiresAt is in the future', () {
       final user = User(
         token: 'abc',
-        email: 'test@test.com',
-        fullName: 'Test',
         expiresAt: DateTime.now().add(const Duration(hours: 1)),
       );
       expect(user.isExpired, false);
+    });
+
+    test('email and fullName are optional', () {
+      final user = User(
+        token: 'abc',
+        expiresAt: DateTime.now().add(const Duration(hours: 1)),
+      );
+      expect(user.email, isNull);
+      expect(user.fullName, isNull);
     });
   });
 }

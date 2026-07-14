@@ -21,12 +21,12 @@ class ApiConstants {
   static String exercisesSearch(String name) =>
       '/api/exercises/search?name=$name';
 
-  // Trainings
-  static const String trainings = '/api/trainings';
+  // Workouts
+  static const String trainings = '/api/workouts';
 
-  static String trainingById(String id) => '/api/trainings/$id';
-  static String trainingDay(String id) => '/api/trainings/$id/day';
-  static const String trainingsToday = '/api/trainings/today';
+  static String trainingById(String id) => '/api/workouts/$id';
+  static String trainingDay(String id) => '/api/workouts/$id/day';
+  static const String trainingsToday = '/api/workouts/today';
 
   // Sessions
   static String sessionStart(String trainingId) =>

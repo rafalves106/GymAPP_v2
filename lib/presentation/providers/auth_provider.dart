@@ -11,30 +11,28 @@ class AuthNotifier extends AsyncNotifier<UserModel?> {
     return null;
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login(String usernameOrEmail, String password) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final repo = ref.read(authRepositoryProvider);
-      final user = await repo.login(email, password);
+      final user = await repo.login(usernameOrEmail, password);
       ref.invalidate(authStateProvider);
       return user;
     });
   }
 
   Future<void> register({
+    required String username,
     required String email,
     required String password,
-    required String firstName,
-    required String lastName,
   }) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final repo = ref.read(authRepositoryProvider);
       final user = await repo.register(
+        username: username,
         email: email,
         password: password,
-        firstName: firstName,
-        lastName: lastName,
       );
       ref.invalidate(authStateProvider);
       return user;

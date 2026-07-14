@@ -69,7 +69,7 @@ class TrainingSummaryScreen extends ConsumerWidget {
                 child: FilledButton(
                   onPressed: () {
                     notifier.reset();
-                    context.go('/home/work/exercises');
+                    context.go('/home/work/today');
                   },
                   child: const Text('Done'),
                 ),

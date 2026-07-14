@@ -4,11 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/data/models/training_model.dart';
 import 'package:gym_app/data/models/training_exercise_model.dart';
-import 'package:gym_app/data/models/exercise_model.dart';
 import 'package:gym_app/domain/entities/training.dart';
 import 'package:gym_app/presentation/providers/trainings_provider.dart';
-import 'package:gym_app/presentation/providers/exercises_provider.dart';
-import 'package:gym_app/domain/enums/muscle_group_type.dart';
 
 class TrainingFormScreen extends ConsumerStatefulWidget {
   final String? id;
@@ -54,23 +51,7 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
   }
 
   void _addExercise() {
-    final exercises = ref.read(exercisesProvider).valueOrNull ?? [];
-    if (exercises.isEmpty) return;
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (ctx) => _ExercisePickerSheet(
-        exercises: exercises,
-        onSelected: (exercise) {
-          Navigator.pop(ctx);
-          _configureExercise(exercise);
-        },
-      ),
-    );
-  }
-
-  void _configureExercise(ExerciseModel exercise) {
+    String name = '';
     int series = 3;
     int reps = 10;
     int restTime = 60;
@@ -90,8 +71,17 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                exercise.name,
+                'Add Exercise',
                 style: Theme.of(ctx).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Exercise Name',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (v) => name = v.trim(),
+                validator: (v) => v == null || v.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 16),
               Row(
@@ -99,7 +89,7 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                   Expanded(
                     child: Column(
                       children: [
-                        const Text('Series'),
+                        const Text('Sets'),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -179,10 +169,11 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
               const SizedBox(height: 16),
               FilledButton(
                 onPressed: () {
+                  if (name.isEmpty) return;
                   setState(() {
                     _exercises.add(TrainingExerciseModel(
-                      exerciseId: exercise.id,
-                      exerciseName: exercise.name,
+                      exerciseId: '',
+                      exerciseName: name,
                       orderIndex: _exercises.length,
                       restTime: restTime,
                       reps: reps,
@@ -203,6 +194,12 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
+    if (_exercises.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Add at least one exercise')),
+      );
+      return;
+    }
 
     final now = DateTime.now();
     final training = TrainingModel(
@@ -273,6 +270,18 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                 ],
               ),
               const SizedBox(height: 8),
+              if (_exercises.isEmpty)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Center(
+                    child: Text(
+                      'No exercises added yet',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          ),
+                    ),
+                  ),
+                ),
               ReorderableListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -290,12 +299,12 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
                 itemBuilder: (context, index) {
                   final te = _exercises[index];
                   return Card(
-                    key: ValueKey(te.exerciseId),
+                    key: ValueKey('exercise-$index-${te.exerciseName}'),
                     child: ListTile(
                       leading: CircleAvatar(child: Text('${index + 1}')),
                       title: Text(te.exerciseName),
                       subtitle: Text(
-                        '${te.series} × ${te.reps} reps • ${te.restTime}s rest',
+                        '${te.series} sets × ${te.reps} reps • ${te.restTime}s rest',
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -322,55 +331,6 @@ class _TrainingFormScreenState extends ConsumerState<TrainingFormScreen> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _ExercisePickerSheet extends StatelessWidget {
-  final List<ExerciseModel> exercises;
-  final ValueChanged<ExerciseModel> onSelected;
-
-  const _ExercisePickerSheet({
-    required this.exercises,
-    required this.onSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: 0.6,
-      minChildSize: 0.3,
-      maxChildSize: 0.9,
-      expand: false,
-      builder: (ctx, scrollController) {
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Text(
-                'Select Exercise',
-                style: Theme.of(ctx).textTheme.titleLarge,
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                controller: scrollController,
-                itemCount: exercises.length,
-                itemBuilder: (ctx, index) {
-                  final exercise = exercises[index];
-                  return ListTile(
-                    title: Text(exercise.name),
-                    subtitle: Text(exercise.muscleGroups
-                        .map((mg) => mg.label)
-                        .join(', ')),
-                    onTap: () => onSelected(exercise),
-                  );
-                },
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }

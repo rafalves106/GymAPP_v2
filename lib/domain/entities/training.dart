@@ -72,4 +72,16 @@ class Training {
     if (scheduledDay == null) return 'None';
     return dayLabelsShort[scheduledDay!];
   }
+
+  /// Converts Flutter day (0=Monday..6=Sunday) to API/C# DayOfWeek (0=Sunday..6=Saturday).
+  static int? flutterDayToApi(int? flutterDay) {
+    if (flutterDay == null) return null;
+    return (flutterDay + 1) % 7;
+  }
+
+  /// Converts API/C# DayOfWeek (0=Sunday..6=Saturday) to Flutter day (0=Monday..6=Sunday).
+  static int? apiDayToFlutter(int? apiDay) {
+    if (apiDay == null) return null;
+    return (apiDay + 6) % 7;
+  }
 }

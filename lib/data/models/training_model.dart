@@ -21,13 +21,26 @@ class TrainingModel extends Training {
               ?.map((e) => TrainingExerciseModel.fromJson(e))
               .toList() ??
           [],
-      scheduledDay: json['scheduledDay'] as int?,
-      createdAt: DateTime.parse(json['createdAt'] as String),
-      updatedAt: DateTime.parse(json['updatedAt'] as String),
+      scheduledDay: Training.apiDayToFlutter(json['scheduledDay'] as int?),
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'] as String)
+          : DateTime.now(),
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'] as String)
+          : DateTime.now(),
     );
   }
 
   Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'exercises': exercises
+          .map((e) => TrainingExerciseModel.fromEntity(e).toJson())
+          .toList(),
+    };
+  }
+
+  Map<String, dynamic> toFullJson() {
     return {
       'id': id,
       'name': name,

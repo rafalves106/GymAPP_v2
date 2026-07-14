@@ -12,23 +12,21 @@ class TrainingExerciseModel extends TrainingExercise {
 
   factory TrainingExerciseModel.fromJson(Map<String, dynamic> json) {
     return TrainingExerciseModel(
-      exerciseId: json['exerciseId'] as String,
-      exerciseName: json['exerciseName'] as String,
-      orderIndex: json['orderIndex'] as int,
-      restTime: json['restTime'] as int,
-      reps: json['reps'] as int,
-      series: json['series'] as int,
+      exerciseId: json['exerciseId'] as String? ?? json['id'] as String? ?? '',
+      exerciseName: json['exerciseName'] as String? ?? json['name'] as String? ?? '',
+      orderIndex: json['orderIndex'] as int? ?? json['order'] as int? ?? 0,
+      restTime: json['restTime'] as int? ?? json['restSeconds'] as int? ?? 0,
+      reps: json['reps'] as int? ?? json['targetReps'] as int? ?? 0,
+      series: json['series'] as int? ?? json['targetSets'] as int? ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'exerciseId': exerciseId,
-      'exerciseName': exerciseName,
-      'orderIndex': orderIndex,
-      'restTime': restTime,
-      'reps': reps,
-      'series': series,
+      'name': exerciseName,
+      'targetSets': series,
+      'targetReps': reps,
+      'restSeconds': restTime,
     };
   }
 

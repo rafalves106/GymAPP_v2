@@ -1,15 +1,18 @@
 class User {
   final String token;
-  final String email;
-  final String fullName;
-  final DateTime expiresAt;
+  final String? email;
+  final String? fullName;
+  final DateTime? expiresAt;
 
   const User({
     required this.token,
-    required this.email,
-    required this.fullName,
-    required this.expiresAt,
+    this.email,
+    this.fullName,
+    this.expiresAt,
   });
 
-  bool get isExpired => DateTime.now().isAfter(expiresAt);
+  bool get isExpired {
+    if (expiresAt == null) return false;
+    return DateTime.now().isAfter(expiresAt!);
+  }
 }

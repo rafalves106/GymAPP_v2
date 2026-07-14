@@ -49,16 +49,16 @@ class TrainingsNotifier extends AsyncNotifier<List<TrainingModel>> {
     );
   }
 
-  Future<void> assignDay(String id, int? day) async {
+  Future<void> assignDay(String id, int? flutterDay) async {
     final repo = ref.read(trainingsRepositoryProvider);
-    await repo.assignDay(id, day);
+    await repo.assignDay(id, flutterDay);
     state = AsyncData(
       (state.value ?? []).map((e) {
         if (e.id == id) {
           return TrainingModel.fromEntity(
             e.copyWith(
-              scheduledDay: day,
-              clearScheduledDay: day == null,
+              scheduledDay: flutterDay,
+              clearScheduledDay: flutterDay == null,
             ),
           );
         }

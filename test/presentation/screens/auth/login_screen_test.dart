@@ -14,7 +14,7 @@ void main() {
   }
 
   group('LoginScreen', () {
-    testWidgets('renders login form with email and password fields', (tester) async {
+    testWidgets('renders login form with username and password fields', (tester) async {
       await tester.pumpWidget(makeTestable());
       await tester.pump();
 
@@ -23,27 +23,15 @@ void main() {
       expect(find.byType(FilledButton), findsOneWidget);
     });
 
-    testWidgets('shows email validation error after interaction', (tester) async {
+    testWidgets('shows username validation error after interaction', (tester) async {
       await tester.pumpWidget(makeTestable());
       await tester.pump();
 
-      // Focus the email field and submit empty
       await tester.enterText(find.byType(TextFormField).first, '');
       await tester.testTextInput.receiveAction(TextInputAction.done);
       await tester.pump();
 
-      expect(find.text('Email is required'), findsOneWidget);
-    });
-
-    testWidgets('shows invalid email format error', (tester) async {
-      await tester.pumpWidget(makeTestable());
-      await tester.pump();
-
-      await tester.enterText(find.byType(TextFormField).first, 'not-an-email');
-      await tester.testTextInput.receiveAction(TextInputAction.done);
-      await tester.pump();
-
-      expect(find.text('Invalid email format'), findsOneWidget);
+      expect(find.text('Username or email is required'), findsOneWidget);
     });
 
     testWidgets('shows password too short error', (tester) async {

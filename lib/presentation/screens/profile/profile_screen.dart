@@ -26,8 +26,8 @@ class ProfileScreen extends ConsumerWidget {
                   CircleAvatar(
                     radius: 40,
                     child: Text(
-                      authState.valueOrNull?.fullName.isNotEmpty == true
-                          ? authState.valueOrNull!.fullName[0].toUpperCase()
+                      (authState.valueOrNull?.fullName?.isNotEmpty == true)
+                          ? authState.valueOrNull!.fullName![0].toUpperCase()
                           : '?',
                       style: const TextStyle(fontSize: 32),
                     ),

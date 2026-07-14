@@ -13,10 +13,10 @@ class AuthRepository {
   })  : _apiClient = apiClient,
         _secureStorage = secureStorage;
 
-  Future<UserModel> login(String email, String password) async {
+  Future<UserModel> login(String usernameOrEmail, String password) async {
     final response = await _apiClient.dio.post(
       ApiConstants.login,
-      data: {'email': email, 'password': password},
+      data: {'usernameOrEmail': usernameOrEmail, 'password': password},
     );
     final user = UserModel.fromJson(response.data);
     await _secureStorage.saveToken(user.token);
@@ -24,18 +24,16 @@ class AuthRepository {
   }
 
   Future<UserModel> register({
+    required String username,
     required String email,
     required String password,
-    required String firstName,
-    required String lastName,
   }) async {
     final response = await _apiClient.dio.post(
       ApiConstants.register,
       data: {
+        'username': username,
         'email': email,
         'password': password,
-        'firstName': firstName,
-        'lastName': lastName,
       },
     );
     final user = UserModel.fromJson(response.data);

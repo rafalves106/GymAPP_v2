@@ -14,13 +14,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _obscurePassword = true;
 
   @override
   void dispose() {
-    _emailController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -29,7 +29,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       HapticFeedbackHelper.light();
       ref.read(authProvider.notifier).login(
-            _emailController.text.trim(),
+            _usernameController.text.trim(),
             _passwordController.text,
           );
     }
@@ -42,7 +42,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     ref.listen(authProvider, (previous, next) {
       next.whenData((user) {
         if (user != null) {
-          context.go('/home/work/exercises');
+          context.go('/home/work/today');
         }
       });
     });
@@ -69,19 +69,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ),
                   const SizedBox(height: 48),
                   TextFormField(
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
+                    controller: _usernameController,
                     decoration: const InputDecoration(
-                      labelText: 'Email',
-                      prefixIcon: Icon(CupertinoIcons.envelope),
+                      labelText: 'Username or Email',
+                      prefixIcon: Icon(CupertinoIcons.person),
                       border: OutlineInputBorder(),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Email is required';
-                      }
-                      if (!value.contains('@')) {
-                        return 'Invalid email format';
+                        return 'Username or email is required';
                       }
                       return null;
                     },

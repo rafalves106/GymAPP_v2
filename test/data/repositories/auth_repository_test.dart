@@ -33,9 +33,6 @@ void main() {
       final response = MockResponse();
       when(() => response.data).thenReturn({
         'token': 'test-token',
-        'email': 'test@test.com',
-        'fullName': 'Test User',
-        'expiresAt': DateTime.now().add(const Duration(hours: 1)).toIso8601String(),
       });
       when(() => mockDio.post(
         any(),
@@ -43,11 +40,31 @@ void main() {
       )).thenAnswer((_) async => response);
       when(() => mockSecureStorage.saveToken(any())).thenAnswer((_) async {});
 
-      final user = await repository.login('test@test.com', 'password');
+      final user = await repository.login('testuser', 'password12345');
 
-      expect(user.email, 'test@test.com');
       expect(user.token, 'test-token');
       verify(() => mockSecureStorage.saveToken('test-token')).called(1);
+    });
+
+    test('register returns UserModel and saves token', () async {
+      final response = MockResponse();
+      when(() => response.data).thenReturn({
+        'token': 'new-token',
+      });
+      when(() => mockDio.post(
+        any(),
+        data: any(named: 'data'),
+      )).thenAnswer((_) async => response);
+      when(() => mockSecureStorage.saveToken(any())).thenAnswer((_) async {});
+
+      final user = await repository.register(
+        username: 'newuser',
+        email: 'new@test.com',
+        password: 'password12345',
+      );
+
+      expect(user.token, 'new-token');
+      verify(() => mockSecureStorage.saveToken('new-token')).called(1);
     });
 
     test('logout deletes token', () async {

@@ -7,11 +7,17 @@ import 'package:gym_app/data/datasources/api_client.dart';
 import 'package:gym_app/data/datasources/secure_storage_datasource.dart';
 import 'package:gym_app/data/repositories/auth_repository.dart';
 
-final apiClientProvider = Provider<ApiClient>((ref) => ApiClient());
-
 final secureStorageProvider = Provider<SecureStorageDataSource>(
   (ref) => SecureStorageDataSource(),
 );
+
+final authTriggerProvider = StateProvider<int>((ref) => 0);
+
+final authStateProvider = FutureProvider<String?>((ref) async {
+  ref.watch(authTriggerProvider);
+  final repo = ref.watch(authRepositoryProvider);
+  return await repo.getToken();
+});
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepository(
@@ -20,9 +26,11 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
   );
 });
 
-final authStateProvider = FutureProvider<String?>((ref) async {
-  final repo = ref.watch(authRepositoryProvider);
-  return await repo.getToken();
+final apiClientProvider = Provider<ApiClient>((ref) {
+  return ApiClient(onUnauthorized: () async {
+    await ref.read(secureStorageProvider).deleteToken();
+    ref.read(authTriggerProvider.notifier).state++;
+  });
 });
 
 final routerProvider = Provider.family<GoRouter, String?>((ref, token) {

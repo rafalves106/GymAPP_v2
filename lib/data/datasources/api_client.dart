@@ -7,7 +7,7 @@ class ApiClient {
   late final Dio _dio;
   final FlutterSecureStorage _secureStorage;
 
-  ApiClient({FlutterSecureStorage? secureStorage})
+  ApiClient({FlutterSecureStorage? secureStorage, Function()? onUnauthorized})
       : _secureStorage = secureStorage ?? const FlutterSecureStorage() {
     _dio = Dio(BaseOptions(
       baseUrl: ApiConstants.baseUrl,
@@ -18,7 +18,7 @@ class ApiClient {
 
     _dio.interceptors.addAll([
       _JwtInterceptor(_secureStorage),
-      _ErrorInterceptor(),
+      _ErrorInterceptor(onUnauthorized: onUnauthorized),
     ]);
   }
 
@@ -47,10 +47,14 @@ class _JwtInterceptor extends Interceptor {
 }
 
 class _ErrorInterceptor extends Interceptor {
+  final Function()? onUnauthorized;
+
+  _ErrorInterceptor({this.onUnauthorized});
+
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (err.response?.statusCode == 401) {
-      // Token expired or invalid — handled by auth provider
+      onUnauthorized?.call();
     }
     handler.next(err);
   }

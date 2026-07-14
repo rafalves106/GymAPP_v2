@@ -15,6 +15,16 @@ class TrainingsRepository {
         .toList();
   }
 
+  Future<List<TrainingModel>> getToday(int day) async {
+    final response = await _apiClient.dio.get(
+      ApiConstants.trainingsToday,
+      queryParameters: {'day': day},
+    );
+    return (response.data as List)
+        .map((e) => TrainingModel.fromJson(e))
+        .toList();
+  }
+
   Future<TrainingModel> getById(String id) async {
     final response =
         await _apiClient.dio.get(ApiConstants.trainingById(id));
@@ -39,5 +49,12 @@ class TrainingsRepository {
 
   Future<void> delete(String id) async {
     await _apiClient.dio.delete(ApiConstants.trainingById(id));
+  }
+
+  Future<void> assignDay(String id, int? day) async {
+    await _apiClient.dio.put(
+      ApiConstants.trainingDay(id),
+      data: {'day': day},
+    );
   }
 }

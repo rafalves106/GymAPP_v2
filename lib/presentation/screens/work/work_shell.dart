@@ -37,8 +37,8 @@ class WorkShell extends StatelessWidget {
             label: 'Exercises',
           ),
           NavigationDestination(
-            icon: Icon(CupertinoIcons.music_note_2),
-            label: 'Trainings',
+            icon: Icon(CupertinoIcons.calendar),
+            label: 'Schedule',
           ),
           NavigationDestination(
             icon: Icon(CupertinoIcons.person),

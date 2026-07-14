@@ -3,7 +3,7 @@ class ApiConstants {
 
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://localhost:5200',
+    defaultValue: 'http://192.168.15.144:5200',
   );
 
   // Auth
@@ -25,4 +25,19 @@ class ApiConstants {
   static const String trainings = '/api/trainings';
 
   static String trainingById(String id) => '/api/trainings/$id';
+  static String trainingDay(String id) => '/api/trainings/$id/day';
+  static const String trainingsToday = '/api/trainings/today';
+
+  // Sessions
+  static String sessionStart(String trainingId) =>
+      '/api/sessions/start/$trainingId';
+  static String sessionById(String id) => '/api/sessions/$id';
+  static String sessionPause(String id) => '/api/sessions/$id/pause';
+  static String sessionResume(String id) => '/api/sessions/$id/resume';
+  static String sessionStop(String id) => '/api/sessions/$id/stop';
+  static String sessionCancel(String id) => '/api/sessions/$id/cancel';
+  static String sessionIncrement(String id, String exerciseId) =>
+      '/api/sessions/$id/exercise/$exerciseId/increment';
+  static String sessionDecrement(String id, String exerciseId) =>
+      '/api/sessions/$id/exercise/$exerciseId/decrement';
 }

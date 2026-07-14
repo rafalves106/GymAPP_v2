@@ -2,22 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gym_app/presentation/providers/active_training_provider.dart';
+import 'package:gym_app/presentation/providers/session_provider.dart';
 
 class TrainingSummaryScreen extends ConsumerWidget {
   const TrainingSummaryScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(activeTrainingProvider);
-    final notifier = ref.read(activeTrainingProvider.notifier);
+    final state = ref.watch(activeSessionProvider);
+    final notifier = ref.read(activeSessionProvider.notifier);
 
-    final totalExercises = state.exercises.length;
+    final training = state.training;
+    final session = state.session;
     final totalTime = state.elapsedTime;
-    final totalSets = state.exercises.fold<int>(
-      0,
-      (sum, e) => sum + e.series,
-    );
+    final totalExercises = training?.exercises.length ?? 0;
+    final completedSets = session?.completedSetsTotal ?? 0;
+    final totalSets = training?.exercises.fold<int>(
+          0,
+          (sum, e) => sum + e.series,
+        ) ??
+        0;
 
     return Scaffold(
       appBar: AppBar(
@@ -55,8 +59,8 @@ class TrainingSummaryScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               _StatCard(
                 icon: CupertinoIcons.repeat,
-                label: 'Total Sets',
-                value: '$totalSets',
+                label: 'Completed Sets',
+                value: '$completedSets / $totalSets',
               ),
               const SizedBox(height: 48),
               SizedBox(

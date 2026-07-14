@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gym_app/presentation/providers/trainings_provider.dart';
-import 'package:gym_app/presentation/providers/active_training_provider.dart';
+import 'package:gym_app/presentation/providers/session_provider.dart';
 import 'package:gym_app/presentation/widgets/haptic_helper.dart';
 
 class TrainingDetailScreen extends ConsumerWidget {
@@ -105,8 +105,8 @@ class TrainingDetailScreen extends ConsumerWidget {
                         : () {
                             HapticFeedbackHelper.heavy();
                             ref
-                                .read(activeTrainingProvider.notifier)
-                                .startTraining(training.exercises);
+                                .read(activeSessionProvider.notifier)
+                                .startSession(training);
                             context.push('/active-training');
                           },
                     icon: const Icon(CupertinoIcons.play_arrow_solid),

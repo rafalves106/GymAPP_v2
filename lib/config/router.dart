@@ -7,7 +7,7 @@ import '../presentation/screens/work/work_shell.dart';
 import '../presentation/screens/work/exercises_list_screen.dart';
 import '../presentation/screens/work/exercise_detail_screen.dart';
 import '../presentation/screens/work/exercise_form_screen.dart';
-import '../presentation/screens/work/trainings_list_screen.dart';
+import '../presentation/screens/work/week_board_screen.dart';
 import '../presentation/screens/work/training_detail_screen.dart';
 import '../presentation/screens/work/training_form_screen.dart';
 import '../presentation/screens/main/active_training_screen.dart';
@@ -74,7 +74,7 @@ GoRouter createRouter({required String? token}) {
           ),
           GoRoute(
             path: '/home/work/trainings',
-            builder: (context, state) => const TrainingsListScreen(),
+            builder: (context, state) => const WeekBoardScreen(),
             routes: [
               GoRoute(
                 path: 'new',

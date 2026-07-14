@@ -7,6 +7,7 @@ class TrainingModel extends Training {
     required super.name,
     super.description,
     required super.exercises,
+    super.scheduledDay,
     required super.createdAt,
     required super.updatedAt,
   });
@@ -20,6 +21,7 @@ class TrainingModel extends Training {
               ?.map((e) => TrainingExerciseModel.fromJson(e))
               .toList() ??
           [],
+      scheduledDay: json['scheduledDay'] as int?,
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
     );
@@ -30,6 +32,7 @@ class TrainingModel extends Training {
       'id': id,
       'name': name,
       'description': description,
+      'scheduledDay': scheduledDay,
       'exercises': exercises
           .map((e) => TrainingExerciseModel.fromEntity(e).toJson())
           .toList(),
@@ -44,6 +47,7 @@ class TrainingModel extends Training {
       name: entity.name,
       description: entity.description,
       exercises: entity.exercises,
+      scheduledDay: entity.scheduledDay,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     );

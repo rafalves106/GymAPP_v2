@@ -1,9 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gym_app/app.dart';
 import 'package:gym_app/data/models/exercise_model.dart';
 import 'package:gym_app/data/repositories/exercises_repository.dart';
 import 'package:gym_app/domain/enums/muscle_group_type.dart';
 import 'package:gym_app/domain/enums/difficulty_level.dart';
-import 'auth_provider.dart';
 
 final exercisesRepositoryProvider = Provider<ExercisesRepository>((ref) {
   return ExercisesRepository(apiClient: ref.watch(apiClientProvider));

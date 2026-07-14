@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gym_app/app.dart';
 import 'package:gym_app/data/models/training_model.dart';
 import 'package:gym_app/data/repositories/trainings_repository.dart';
-import 'auth_provider.dart';
 
 final trainingsRepositoryProvider = Provider<TrainingsRepository>((ref) {
   return TrainingsRepository(apiClient: ref.watch(apiClientProvider));

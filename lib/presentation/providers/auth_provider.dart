@@ -1,21 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gym_app/data/datasources/api_client.dart';
-import 'package:gym_app/data/datasources/secure_storage_datasource.dart';
+import 'package:gym_app/app.dart';
 import 'package:gym_app/data/models/user_model.dart';
-import 'package:gym_app/data/repositories/auth_repository.dart';
-
-final apiClientProvider = Provider<ApiClient>((ref) => ApiClient());
-
-final secureStorageProvider = Provider<SecureStorageDataSource>(
-  (ref) => SecureStorageDataSource(),
-);
-
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  return AuthRepository(
-    apiClient: ref.watch(apiClientProvider),
-    secureStorage: ref.watch(secureStorageProvider),
-  );
-});
 
 final authProvider =
     AsyncNotifierProvider<AuthNotifier, UserModel?>(AuthNotifier.new);
@@ -23,10 +8,6 @@ final authProvider =
 class AuthNotifier extends AsyncNotifier<UserModel?> {
   @override
   Future<UserModel?> build() async {
-    final repo = ref.read(authRepositoryProvider);
-    final token = await repo.getToken();
-    if (token == null) return null;
-    // In a real app, decode JWT to get user info
     return null;
   }
 
@@ -34,7 +15,9 @@ class AuthNotifier extends AsyncNotifier<UserModel?> {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final repo = ref.read(authRepositoryProvider);
-      return await repo.login(email, password);
+      final user = await repo.login(email, password);
+      ref.invalidate(authStateProvider);
+      return user;
     });
   }
 
@@ -47,18 +30,21 @@ class AuthNotifier extends AsyncNotifier<UserModel?> {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
       final repo = ref.read(authRepositoryProvider);
-      return await repo.register(
+      final user = await repo.register(
         email: email,
         password: password,
         firstName: firstName,
         lastName: lastName,
       );
+      ref.invalidate(authStateProvider);
+      return user;
     });
   }
 
   Future<void> logout() async {
     final repo = ref.read(authRepositoryProvider);
     await repo.logout();
+    ref.invalidate(authStateProvider);
     state = const AsyncData(null);
   }
 }
